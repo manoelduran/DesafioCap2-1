@@ -9,7 +9,11 @@ class ListAllUsersUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
   execute({ user_id }: IRequest): User[] {
-    // Complete aqui
+    const findedUser = this.usersRepository.findById(user_id);
+    if (findedUser.admin === false) {
+      throw new Error("User not found!");
+    }
+    return this.usersRepository.list();
   }
 }
 
